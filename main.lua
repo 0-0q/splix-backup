@@ -4598,4 +4598,37 @@ function sections:configloader(props)
 	setmetatable(configloader, configloaders)
 	return configloader 
 end
+--
+function library:unload()
+	local window = self
+
+	if window.connections then
+		for i,v in pairs(window.connections) do
+			if v and v.Connected then
+				pcall(function() v:Disconnect() end)
+			end
+		end
+	end
+
+	if window.screen then
+		pcall(function() window.screen:Remove() end)
+	end
+	
+	window.pages = {}
+	window.sections = {}
+	window.toggles = {}
+	window.buttons = {}
+	window.sliders = {}
+	window.dropdowns = {}
+	window.multiboxs = {}
+	window.buttonboxs = {}
+	window.textboxs = {}
+	window.keybinds = {}
+	window.colorpickers = {}
+	window.watermarks = {}
+	window.connections = {}
+	window.labels = {}
+	window.themeitems = {}
+end
+
 return library
